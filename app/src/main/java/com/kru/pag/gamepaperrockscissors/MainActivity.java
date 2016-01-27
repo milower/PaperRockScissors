@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         scissorImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRandomPicture();
+                myRandomPicture(3);
                 changePlay(3);
 
             }
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         rockImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRandomPicture();
+                myRandomPicture(2);
                 changePlay(2);
 
             }
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int intNumber = 1;
-                myRandomPicture();
+                myRandomPicture(1);
                 changePlay(intNumber);
 
             }
@@ -72,14 +72,57 @@ public class MainActivity extends AppCompatActivity {
 
     } // paperController
 
-    private void myRandomPicture(){
+    private void myRandomPicture(int intUser){
         int intmyRandom = 0;
         Random objrandom = new Random();
         intmyRandom = objrandom.nextInt(3) +1;
-        Log.d("Ran","intmyRandom ==> "+ intmyRandom);
+        Log.d("Ran", "intmyRandom ==> " + intmyRandom);
 
         androidChange(intmyRandom);
 
+        checkScore(intUser, intmyRandom);
+    }
+
+    private void checkScore(int intUser, int intmyRandom) {
+        String strwin = "เฮ!! คุณชนะ";
+        String strLost = "เฮ!! กูชนะ";
+        String strDraw = "เอาใหม่ๆ";
+        String strShow = null;
+
+        //1 > กระดาษ, 2 > ค้อน 3, > กรรไกร
+        switch (intUser){
+            case 1: //กระดาษ
+                switch (intmyRandom){
+                    case 1://กระดาษ
+                        strShow = strDraw;
+                    case 2://ค้อน
+                        strShow = strwin;
+                    case 3://กรรไกร
+                        strShow = strLost;
+                }
+                break;
+            case 2: //ค้อน
+                switch (intmyRandom){
+                    case 1://กระดาษ
+                        strShow = strLost;
+                    case 2://ค้อน
+                        strShow = strDraw;
+                    case 3://กรรไกร
+                        strShow = strwin;
+                }
+                break;
+            case 3: //กรรไกร
+                switch (intmyRandom){
+                    case 1://กระดาษ
+                        strShow = strwin;
+                    case 2://ค้อน
+                        strShow = strLost;
+                    case 3://กรรไกร
+                        strShow = strDraw;
+                }
+                break;
+        }
+        showtextView.setText(strShow);
     }
 
     private void androidChange(int intmyRandom) {
